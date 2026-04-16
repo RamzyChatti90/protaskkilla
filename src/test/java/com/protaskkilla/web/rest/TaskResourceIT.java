@@ -4,12 +4,18 @@ import static com.protaskkilla.domain.TaskAsserts.*;
 import static com.protaskkilla.web.rest.TestUtil.createUpdateProxyForBean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import com.protaskkilla.domain.enumeration.TaskStatus;
+import java.util.Arrays;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.protaskkilla.IntegrationTest;
 import com.protaskkilla.domain.Task;
+import com.protaskkilla.domain.enumeration.TaskStatus;
 import com.protaskkilla.repository.TaskRepository;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
@@ -43,6 +49,9 @@ class TaskResourceIT {
     private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final TaskStatus DEFAULT_STATUS = TaskStatus.TODO;
+    private static final TaskStatus UPDATED_STATUS = TaskStatus.IN_PROGRESS;
+
     private static final String ENTITY_API_URL = "/api/tasks";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -72,7 +81,7 @@ class TaskResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Task createEntity() {
-        return new Task().name(DEFAULT_NAME).description(DEFAULT_DESCRIPTION).createdAt(DEFAULT_CREATED_AT);
+        return new Task().name(DEFAULT_NAME).description(DEFAULT_DESCRIPTION).createdAt(DEFAULT_CREATED_AT).status(DEFAULT_STATUS);
     }
 
     /**
@@ -82,7 +91,7 @@ class TaskResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Task createUpdatedEntity() {
-        return new Task().name(UPDATED_NAME).description(UPDATED_DESCRIPTION).createdAt(UPDATED_CREATED_AT);
+        return new Task().name(UPDATED_NAME).description(UPDATED_DESCRIPTION).createdAt(UPDATED_CREATED_AT).status(UPDATED_STATUS);
     }
 
     @BeforeEach
@@ -167,7 +176,8 @@ class TaskResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())));
+            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
 
     @Test
@@ -184,7 +194,8 @@ class TaskResourceIT {
             .andExpect(jsonPath("$.id").value(task.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()));
+            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -206,7 +217,7 @@ class TaskResourceIT {
         Task updatedTask = taskRepository.findById(task.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedTask are not directly saved in db
         em.detach(updatedTask);
-        updatedTask.name(UPDATED_NAME).description(UPDATED_DESCRIPTION).createdAt(UPDATED_CREATED_AT);
+        updatedTask.name(UPDATED_NAME).description(UPDATED_DESCRIPTION).createdAt(UPDATED_CREATED_AT).status(UPDATED_STATUS);
 
         restTaskMockMvc
             .perform(
@@ -310,7 +321,7 @@ class TaskResourceIT {
         Task partialUpdatedTask = new Task();
         partialUpdatedTask.setId(task.getId());
 
-        partialUpdatedTask.name(UPDATED_NAME).description(UPDATED_DESCRIPTION).createdAt(UPDATED_CREATED_AT);
+        partialUpdatedTask.name(UPDATED_NAME).description(UPDATED_DESCRIPTION).createdAt(UPDATED_CREATED_AT).status(UPDATED_STATUS);
 
         restTaskMockMvc
             .perform(
@@ -416,6 +427,35 @@ class TaskResourceIT {
         assertTaskAllPropertiesEquals(expectedTask, getPersistedTask(expectedTask));
     }
 
+    @Test
+    @Transactional
+    @WithMockUser(username = "user") // Mock user for the dashboard data
+    void getTaskDashboardData_shouldReturnDashboardStats() throws Exception {
+        // Given: Create some tasks for the mocked user
+        taskRepository.deleteAll(); // Clear existing tasks
+        String currentUserLogin = "user";
+
+        // Create tasks with different statuses and creation dates
+        Task task1 = createEntity().name("Task 1").status(TaskStatus.TODO).createdAt(Instant.now().minus(2, ChronoUnit.DAYS));
+        Task task2 = createEntity().name("Task 2").status(TaskStatus.IN_PROGRESS).createdAt(Instant.now().minus(1, ChronoUnit.DAYS));
+        Task task3 = createEntity().name("Task 3").status(TaskStatus.DONE).createdAt(Instant.now());
+        Task task4 = createEntity().name("Task 4").status(TaskStatus.DONE).createdAt(Instant.now().minus(1, ChronoUnit.DAYS));
+
+        taskRepository.saveAll(Arrays.asList(task1, task2, task3, task4));
+
+        // When: Call the dashboard endpoint
+        restTaskMockMvc
+            .perform(get(ENTITY_API_URL + "/dashboard").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.totalTasks").value(4))
+            .andExpect(jsonPath("$.tasksByStatus").isArray())
+            .andExpect(jsonPath("$.tasksByStatus.[?(@.status == 'TODO')].count").value(hasItem(1)))
+            .andExpect(jsonPath("$.tasksByStatus.[?(@.status == 'IN_PROGRESS')].count").value(hasItem(1)))
+            .andExpect(jsonPath("$.tasksByStatus.[?(@.status == 'DONE')].count").value(hasItem(2)))
+            .andExpect(jsonPath("$.tasksByStatus.[?(@.status == 'CANCELLED')].count").value(hasItem(0)))
+            .andExpect(jsonPath("$.completedTasksEvolution").isArray());
+    }
     protected void assertPersistedTaskToMatchUpdatableProperties(Task expectedTask) {
         assertTaskAllUpdatablePropertiesEquals(expectedTask, getPersistedTask(expectedTask));
     }
