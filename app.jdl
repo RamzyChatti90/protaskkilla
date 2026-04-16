@@ -18,6 +18,7 @@ entity Task {
   name String required
   description TextBlob
   createdAt Instant
+  status TaskStatus
 }
 
 entity Category {
