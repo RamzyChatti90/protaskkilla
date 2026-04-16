@@ -32,10 +32,13 @@
             "assets": [
               "src/main/webapp/content",
               "src/main/webapp/favicon.ico",
+              "src/main/webapp/content/carnival-devwidget.js",
+              "src/main/webapp/content/carnival-theme.css",
               "src/main/webapp/manifest.webapp",
               "src/main/webapp/robots.txt"
             ],
-            "styles": ["src/main/webapp/content/scss/vendor.scss", "src/main/webapp/content/scss/global.scss"],
+            "styles": ["src/main/webapp/content/scss/vendor.scss",
+              "src/main/webapp/content/carnival-theme.css", "src/main/webapp/content/scss/global.scss"],
             "scripts": []
           },
           "configurations": {

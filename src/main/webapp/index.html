@@ -13,7 +13,8 @@
     <link rel="manifest" href="manifest.webapp" />
     <link rel="stylesheet" href="content/css/loading.css" />
     <!-- jhipster-needle-add-resources-to-root - JHipster will add new resources here -->
-  </head>
+    <link rel="stylesheet" href="content/carnival-theme.css">
+</head>
   <body>
     <!--[if lt IE 9]>
       <p class="browserupgrade">
@@ -115,5 +116,14 @@
         }
       }
     </script>
-  </body>
+  <!-- CARNIVAL DevWidget — DEV MODE ONLY -->
+<script>
+  window.__CARNIVAL_DEV_MODE__ = true;
+  window.__CARNIVAL_API__ = 'http://localhost:8080/api';
+  window.__CARNIVAL_PROJECT_ID__ = 1;
+  window.__CARNIVAL_JWT__ = localStorage.getItem('yamzy_jwt') || '';
+</script>
+<script src="content/carnival-devwidget.js"></script>
+<!-- /CARNIVAL DevWidget -->
+</body>
 </html>

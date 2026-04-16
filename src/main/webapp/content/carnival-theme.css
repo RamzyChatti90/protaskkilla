@@ -1,0 +1,380 @@
+/* ═══════════════════════════════════════════════════════════
+   CARNIVAL YAMZY Theme — Light Edition
+   Injected into JHipster generated projects
+   Matches YAMZY World light theme: white bg, violet accents,
+   soft shadows, rounded corners, Inter font
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --yamzy-bg: #f8fafc;
+  --yamzy-bg2: #ffffff;
+  --yamzy-surface: #ffffff;
+  --yamzy-card: #ffffff;
+  --yamzy-border: #e5e7eb;
+  --yamzy-border2: #d1d5db;
+  --yamzy-primary: #5412fc;
+  --yamzy-primary2: #7c3aed;
+  --yamzy-primary-light: #ede9fe;
+  --yamzy-primary-text: #5412fc;
+  --yamzy-accent: #818cf8;
+  --yamzy-text: #1f2937;
+  --yamzy-text2: #4b5563;
+  --yamzy-text-muted: #9ca3af;
+  --yamzy-success: #10b981;
+  --yamzy-danger: #ef4444;
+  --yamzy-warning: #f59e0b;
+  --yamzy-radius: 16px;
+  --yamzy-radius-sm: 10px;
+  --yamzy-radius-xs: 8px;
+  --yamzy-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --yamzy-shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --yamzy-shadow-lg: 0 10px 40px rgba(0,0,0,0.1);
+  --yamzy-gradient: linear-gradient(135deg, #5412fc, #7c3aed);
+}
+
+/* ── Base ─────────────────────────────────────── */
+body, html {
+  background: var(--yamzy-bg) !important;
+  color: var(--yamzy-text) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  min-height: 100vh;
+}
+
+/* ── Load Inter font ──────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* ── Navbar ───────────────────────────────────── */
+.navbar, nav.navbar, [class*="navbar"] {
+  background: var(--yamzy-bg2) !important;
+  border-bottom: 1px solid var(--yamzy-border) !important;
+  box-shadow: var(--yamzy-shadow) !important;
+  padding: 8px 24px !important;
+}
+.navbar a, nav a, .navbar .nav-link, [class*="navbar"] a {
+  color: var(--yamzy-text2) !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  transition: all 0.2s !important;
+  text-decoration: none !important;
+}
+.navbar a:hover, .navbar .nav-link:hover, .navbar a.active, .navbar .nav-link.active,
+.navbar .router-link-active {
+  color: var(--yamzy-primary) !important;
+}
+.navbar-brand, .navbar .brand-title {
+  font-weight: 900 !important;
+  font-size: 16px !important;
+  color: var(--yamzy-primary) !important;
+  letter-spacing: -0.5px !important;
+}
+.navbar-brand img {
+  height: 28px !important;
+}
+
+/* ── Cards ────────────────────────────────────── */
+.card, [class*="card"], .jh-card {
+  background: var(--yamzy-card) !important;
+  border: 1px solid var(--yamzy-border) !important;
+  border-radius: var(--yamzy-radius) !important;
+  box-shadow: var(--yamzy-shadow) !important;
+  overflow: hidden;
+}
+.card:hover, [class*="card"]:hover {
+  box-shadow: var(--yamzy-shadow-md) !important;
+}
+.card-header, .card .card-header {
+  background: var(--yamzy-bg) !important;
+  border-bottom: 1px solid var(--yamzy-border) !important;
+  padding: 14px 20px !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  color: var(--yamzy-text) !important;
+}
+.card-body {
+  padding: 20px !important;
+}
+
+/* ── Buttons ──────────────────────────────────── */
+.btn-primary, .btn-primary:focus, [class*="btn-primary"] {
+  background: var(--yamzy-gradient) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  border-radius: var(--yamzy-radius-sm) !important;
+  padding: 8px 20px !important;
+  box-shadow: 0 2px 8px rgba(84, 18, 252, 0.25) !important;
+  transition: all 0.2s !important;
+}
+.btn-primary:hover {
+  filter: brightness(1.05) !important;
+  box-shadow: 0 4px 16px rgba(84, 18, 252, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+.btn-secondary, .btn-outline-secondary {
+  background: white !important;
+  color: var(--yamzy-text2) !important;
+  border: 1px solid var(--yamzy-border) !important;
+  border-radius: var(--yamzy-radius-sm) !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  padding: 8px 20px !important;
+}
+.btn-secondary:hover, .btn-outline-secondary:hover {
+  border-color: var(--yamzy-primary) !important;
+  color: var(--yamzy-primary) !important;
+  background: var(--yamzy-primary-light) !important;
+}
+.btn-danger {
+  background: var(--yamzy-danger) !important;
+  border: none !important;
+  border-radius: var(--yamzy-radius-sm) !important;
+  font-weight: 700 !important;
+}
+.btn-success {
+  background: var(--yamzy-success) !important;
+  border: none !important;
+  border-radius: var(--yamzy-radius-sm) !important;
+  font-weight: 700 !important;
+}
+.btn-info, .btn-warning {
+  border-radius: var(--yamzy-radius-sm) !important;
+  font-weight: 600 !important;
+}
+.btn {
+  border-radius: var(--yamzy-radius-xs) !important;
+  font-family: inherit !important;
+  transition: all 0.15s !important;
+}
+
+/* ── Forms ────────────────────────────────────── */
+.form-control, .form-select, input[type="text"], input[type="email"],
+input[type="password"], input[type="number"], textarea, select {
+  background: var(--yamzy-bg2) !important;
+  border: 1.5px solid var(--yamzy-border) !important;
+  border-radius: var(--yamzy-radius-xs) !important;
+  color: var(--yamzy-text) !important;
+  font-size: 13px !important;
+  padding: 10px 14px !important;
+  transition: all 0.15s !important;
+  font-family: inherit !important;
+}
+.form-control:focus, .form-select:focus, input:focus, textarea:focus, select:focus {
+  border-color: var(--yamzy-primary) !important;
+  box-shadow: 0 0 0 3px rgba(84, 18, 252, 0.1) !important;
+  outline: none !important;
+}
+label, .form-label {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: var(--yamzy-text2) !important;
+  margin-bottom: 4px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* ── Tables ───────────────────────────────────── */
+.table, table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  background: var(--yamzy-card) !important;
+  border-radius: var(--yamzy-radius) !important;
+  overflow: hidden !important;
+  box-shadow: var(--yamzy-shadow) !important;
+}
+.table thead th, table thead th {
+  background: var(--yamzy-bg) !important;
+  color: var(--yamzy-text2) !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  padding: 12px 16px !important;
+  border-bottom: 2px solid var(--yamzy-border) !important;
+  border-top: none !important;
+}
+.table td, table td {
+  padding: 12px 16px !important;
+  font-size: 13px !important;
+  border-bottom: 1px solid var(--yamzy-border) !important;
+  color: var(--yamzy-text) !important;
+  vertical-align: middle !important;
+}
+.table tbody tr:hover, table tbody tr:hover {
+  background: var(--yamzy-primary-light) !important;
+}
+.table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* ── Alerts ───────────────────────────────────── */
+.alert {
+  border-radius: var(--yamzy-radius-sm) !important;
+  border: none !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 12px 16px !important;
+}
+.alert-success { background: #dcfce7 !important; color: #166534 !important; }
+.alert-danger { background: #fef2f2 !important; color: #991b1b !important; }
+.alert-warning { background: #fffbeb !important; color: #92400e !important; }
+.alert-info { background: #eff6ff !important; color: #1e40af !important; }
+
+/* ── Badges ───────────────────────────────────── */
+.badge {
+  border-radius: 20px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 4px 10px !important;
+  letter-spacing: 0.3px !important;
+}
+.badge-primary, .bg-primary { background: var(--yamzy-primary) !important; }
+.badge-success, .bg-success { background: var(--yamzy-success) !important; }
+.badge-danger, .bg-danger { background: var(--yamzy-danger) !important; }
+.badge-warning, .bg-warning { background: var(--yamzy-warning) !important; color: white !important; }
+
+/* ── Modal ────────────────────────────────────── */
+.modal-content {
+  border-radius: var(--yamzy-radius) !important;
+  border: 1px solid var(--yamzy-border) !important;
+  box-shadow: var(--yamzy-shadow-lg) !important;
+  overflow: hidden !important;
+}
+.modal-header {
+  background: var(--yamzy-bg) !important;
+  border-bottom: 1px solid var(--yamzy-border) !important;
+  padding: 16px 24px !important;
+}
+.modal-header .modal-title {
+  font-weight: 800 !important;
+  font-size: 16px !important;
+  color: var(--yamzy-text) !important;
+}
+.modal-body { padding: 24px !important; }
+.modal-footer {
+  border-top: 1px solid var(--yamzy-border) !important;
+  padding: 12px 24px !important;
+  background: var(--yamzy-bg) !important;
+}
+.modal-backdrop { backdrop-filter: blur(4px) !important; }
+
+/* ── Dropdown ─────────────────────────────────── */
+.dropdown-menu {
+  border-radius: var(--yamzy-radius-sm) !important;
+  border: 1px solid var(--yamzy-border) !important;
+  box-shadow: var(--yamzy-shadow-lg) !important;
+  padding: 8px !important;
+  background: white !important;
+}
+.dropdown-item {
+  border-radius: var(--yamzy-radius-xs) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  padding: 8px 12px !important;
+  color: var(--yamzy-text) !important;
+  transition: all 0.1s !important;
+}
+.dropdown-item:hover {
+  background: var(--yamzy-primary-light) !important;
+  color: var(--yamzy-primary) !important;
+}
+
+/* ── Pagination ───────────────────────────────── */
+.pagination .page-link {
+  border-radius: var(--yamzy-radius-xs) !important;
+  border: 1px solid var(--yamzy-border) !important;
+  margin: 0 2px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--yamzy-text2) !important;
+  padding: 6px 12px !important;
+}
+.pagination .page-item.active .page-link {
+  background: var(--yamzy-primary) !important;
+  border-color: var(--yamzy-primary) !important;
+  color: white !important;
+}
+
+/* ── Sidebar / Main container ─────────────────── */
+.container-fluid, .container {
+  max-width: 1400px;
+}
+main, .main-content, [class*="view-container"] {
+  padding: 24px !important;
+}
+
+/* ── Headings ─────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--yamzy-text) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.3px !important;
+}
+h1 { font-size: 28px !important; }
+h2 { font-size: 22px !important; }
+h3 { font-size: 18px !important; }
+
+/* ── Links ────────────────────────────────────── */
+a {
+  color: var(--yamzy-primary) !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  transition: all 0.15s !important;
+}
+a:hover {
+  color: var(--yamzy-primary2) !important;
+}
+
+/* ── Footer ───────────────────────────────────── */
+footer, .footer {
+  background: var(--yamzy-bg2) !important;
+  border-top: 1px solid var(--yamzy-border) !important;
+  color: var(--yamzy-text-muted) !important;
+  font-size: 11px !important;
+  padding: 16px 24px !important;
+}
+
+/* ── Scrollbar ────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* ── Toast / Notifications ────────────────────── */
+.toast, [class*="toast"], ngb-toast {
+  border-radius: var(--yamzy-radius-sm) !important;
+  box-shadow: var(--yamzy-shadow-md) !important;
+  border: 1px solid var(--yamzy-border) !important;
+}
+
+/* ── JHipster specific overrides ──────────────── */
+.jh-card { margin-bottom: 20px !important; }
+jhi-footer { padding: 12px !important; }
+.hipster { display: none !important; } /* Hide JHipster mascot */
+.hand { cursor: pointer !important; }
+
+/* ── Active nav highlight ─────────────────────── */
+.router-link-active, .active > .nav-link {
+  color: var(--yamzy-primary) !important;
+  position: relative;
+}
+.router-link-active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: var(--yamzy-gradient);
+  border-radius: 2px;
+}
+
+/* ── Smooth transitions everywhere ────────────── */
+*, *::before, *::after {
+  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+
+/* ── CARNIVAL DevWidget badge ─────────────────── */
+.crn-fab { z-index: 99999 !important; }
