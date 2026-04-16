@@ -1,0 +1,33 @@
+application {
+  config {
+    serverPort 9000
+    baseName protaskkilla
+    applicationType monolith
+    authenticationType jwt
+    buildTool maven
+    clientFramework angular
+    databaseType sql
+    devDatabaseType h2Disk
+    prodDatabaseType postgresql
+    packageName com.protaskkilla
+  }
+  entities Task, Category, Comment
+}
+
+entity Task {
+  name String required
+  description TextBlob
+  createdAt Instant
+}
+
+entity Category {
+  name String required
+  description TextBlob
+  createdAt Instant
+}
+
+entity Comment {
+  name String required
+  description TextBlob
+  createdAt Instant
+}
