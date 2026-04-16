@@ -23,6 +23,9 @@
             <column name="created_at" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
+            <column name="status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="task" columnName="created_at" columnDataType="${datetimeType}"/>
@@ -48,6 +51,7 @@
             <column name="name" type="string"/>
             <column name="description" type="clob"/>
             <column name="created_at" type="date"/>
+            <column name="status" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
