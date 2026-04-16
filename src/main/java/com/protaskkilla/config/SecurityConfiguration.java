@@ -52,8 +52,7 @@ public class SecurityConfiguration {
             .addFilterAfter(new SpaWebFilter(), BasicAuthenticationFilter.class)
             .headers(headers ->
                 headers
-                    // CARNIVAL_CSP_PATCHED: CSP disabled for dev mode
-                // .contentSecurityPolicy(csp -> csp.policyDirectives("")).getContentSecurityPolicy()))
+                    .contentSecurityPolicy(csp -> csp.policyDirectives(jHipsterProperties.getSecurity().getContentSecurityPolicy()))
                     .frameOptions(FrameOptionsConfig::sameOrigin)
                     .referrerPolicy(referrer -> referrer.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
                     .permissionsPolicyHeader(permissions ->
