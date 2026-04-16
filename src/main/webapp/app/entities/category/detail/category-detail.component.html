@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (category(); as categoryRef) {
+      <div>
+        <h2 data-cy="categoryDetailsHeading"><span jhiTranslate="protaskkillaApp.category.detail.title">Category</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ categoryRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="protaskkillaApp.category.name">Name</span></dt>
+          <dd>
+            <span>{{ categoryRef.name }}</span>
+          </dd>
+          <dt><span jhiTranslate="protaskkillaApp.category.description">Description</span></dt>
+          <dd>
+            <span>{{ categoryRef.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="protaskkillaApp.category.createdAt">Created At</span></dt>
+          <dd>
+            <span>{{ categoryRef.createdAt | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/category', categoryRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

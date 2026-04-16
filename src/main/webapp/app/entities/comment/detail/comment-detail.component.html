@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (comment(); as commentRef) {
+      <div>
+        <h2 data-cy="commentDetailsHeading"><span jhiTranslate="protaskkillaApp.comment.detail.title">Comment</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ commentRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="protaskkillaApp.comment.name">Name</span></dt>
+          <dd>
+            <span>{{ commentRef.name }}</span>
+          </dd>
+          <dt><span jhiTranslate="protaskkillaApp.comment.description">Description</span></dt>
+          <dd>
+            <span>{{ commentRef.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="protaskkillaApp.comment.createdAt">Created At</span></dt>
+          <dd>
+            <span>{{ commentRef.createdAt | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/comment', commentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
