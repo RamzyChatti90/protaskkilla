@@ -2,6 +2,8 @@ package com.protaskkilla.web.rest;
 
 import com.protaskkilla.domain.Task;
 import com.protaskkilla.repository.TaskRepository;
+import com.protaskkilla.service.TaskDashboardService;
+import java.util.Map;
 import com.protaskkilla.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -35,9 +37,11 @@ public class TaskResource {
     private String applicationName;
 
     private final TaskRepository taskRepository;
+    private final TaskDashboardService taskDashboardService;
 
-    public TaskResource(TaskRepository taskRepository) {
+    public TaskResource(TaskRepository taskRepository, TaskDashboardService taskDashboardService) {
         this.taskRepository = taskRepository;
+        this.taskDashboardService = taskDashboardService;
     }
 
     /**
@@ -130,6 +134,9 @@ public class TaskResource {
                 if (task.getCreatedAt() != null) {
                     existingTask.setCreatedAt(task.getCreatedAt());
                 }
+                if (task.getStatus() != null) {
+                    existingTask.setStatus(task.getStatus());
+                }
 
                 return existingTask;
             })
@@ -157,7 +164,18 @@ public class TaskResource {
      *
      * @param id the id of the task to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the task, or with status {@code 404 (Not Found)}.
+
+    /**
+     * {@code GET  /tasks/dashboard} : get dashboard data for the current user.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the dashboard data.
      */
+    @GetMapping("/dashboard")
+    public ResponseEntity<Map<String, Object>> getTaskDashboardData() {
+        LOG.debug("REST request to get Task Dashboard Data");
+        Map<String, Object> dashboardData = taskDashboardService.getDashboardDataForCurrentUser(7); // Récupérer les données pour 7 jours
+        return ResponseEntity.ok(dashboardData);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTask(@PathVariable("id") Long id) {
         LOG.debug("REST request to get Task : {}", id);
